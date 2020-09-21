@@ -12,7 +12,6 @@ export interface IButton {
 }
 
 const Button: React.FC<IButton> = ({ label, handleClick }) => {
-  console.log(`Re-rendering Button :: ${label}`);
   return <button onClick={handleClick}>{label}</button>;
 };
 

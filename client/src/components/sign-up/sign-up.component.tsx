@@ -2,7 +2,7 @@ import React from "react";
 import useInputState from "../../hooks/useInputState.hook";
 import Button from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
-const SignIn = () => {
+const SignUp = () => {
   const [username, setUsername, resetUsername] = useInputState("");
   const [password, setPassword, resetPassword] = useInputState("");
 
@@ -27,7 +27,7 @@ const SignIn = () => {
   };
   return (
     <div>
-      <h1>Sign In</h1>
+         <h1>Sign Up</h1>
       <FormInput
         type="text"
         value={username}
@@ -38,7 +38,7 @@ const SignIn = () => {
       <FormInput
         value={password}
         type="password"
-        label="Password"
+        label="password"
         handleChange={handlePasswordChange}
         required
       />
@@ -48,4 +48,4 @@ const SignIn = () => {
   );
 };
 
-export default React.memo(SignIn);
+export default React.memo(SignUp);

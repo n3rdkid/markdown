@@ -30,7 +30,6 @@ const FormInput: React.FC<IFormInput> = ({
   handleChange,
   ...otherProps
 }) => {
-  console.log(`Re-rendering Form Input ::: ${label}`);
   return (
     <div className="form-group">
       <label className="label"> {label} </label>

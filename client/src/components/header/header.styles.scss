@@ -1,0 +1,15 @@
+.header {
+    display: flex;
+    padding: 8px;
+    border-bottom: 4px solid black;
+}
+
+.links {
+    margin-left: auto;
+    .link {
+        padding: 8px;
+        cursor: pointer;
+        border: 1px solid red;
+        display: inline-block;
+    }
+}
