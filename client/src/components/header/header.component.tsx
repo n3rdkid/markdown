@@ -1,13 +1,12 @@
 import React from "react";
+import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "../../redux/user/user.selector";
 import "./header.styles.scss";
-export interface IHeader {
-  //
-  currentUser: {
-    id: string;
-  } | null;
-}
-const Header: React.FC<IHeader> = ({ currentUser }) => {
+
+const Header: React.FC<any> = (props: any) => {
+  const { currentUser } = props;
   return (
     <div className="header">
       <div className="logo"> Markdown</div>
@@ -27,4 +26,7 @@ const Header: React.FC<IHeader> = ({ currentUser }) => {
   );
 };
 
-export default Header;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+});
+export default React.memo(connect(mapStateToProps)(Header));

@@ -2,7 +2,10 @@ import React from "react";
 import useInputState from "../../hooks/useInputState.hook";
 import Button from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
-const SignIn = () => {
+import { signInStart } from "../../redux/user/user.actions";
+import { IUserSignInInfo } from "../../redux/user/user.interfaces";
+import { connect } from "react-redux";
+const SignIn = (props: any) => {
   const [username, setUsername, resetUsername] = useInputState("");
   const [password, setPassword, resetPassword] = useInputState("");
 
@@ -13,9 +16,10 @@ const SignIn = () => {
   const handlePasswordChange = React.useCallback((e: any) => {
     setPassword(e.target.value);
   }, []);
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    const signIn = props.signIn;
+    await signIn({ username, password });
     resetPassword();
 
     resetUsername();
@@ -48,4 +52,9 @@ const SignIn = () => {
   );
 };
 
-export default React.memo(SignIn);
+const mapDispatchToProps = (dispatch: any) => ({
+  signIn: ({ username, password }: IUserSignInInfo) =>
+    dispatch(signInStart({ username, password })),
+});
+
+export default React.memo(connect(null, mapDispatchToProps)(SignIn));
