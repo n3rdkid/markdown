@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { Switch, Route, Redirect } from "react-router-dom";
+import Landing from "./pages/Landing.page";
 import Header from "./components/header/header.component";
-import SignInSignUp from "./pages/SignInSignUp.pages";
+import SignInSignUp from "./pages/SignInSignUp.page";
 import { selectCurrentUser } from "./redux/user/user.selector";
 import { checkUserSession } from "./redux/user/user.actions";
 function App(props: any) {
+  const { currentUser } = props;
   useEffect(() => {
     const { checkUserSession } = props;
     checkUserSession();
@@ -16,20 +18,16 @@ function App(props: any) {
     <div className="App">
       <Header currentUser={{ id: "1" }} />
       <Switch>
-        <Route exact path="/" component={SignInSignUp} />
+        <Route exact path="/" component={Landing} />
         <Route
           exact
           path="/signin"
-          render={() =>
-            props.currentUser ? <Redirect to="/" /> : <SignInSignUp />
-          }
+          render={() => (props.currentUser ? <Redirect to="/" /> : <SignInSignUp />)}
         />
         <Route
           exact
           path="/signup"
-          render={() =>
-            props.currentUser ? <Redirect to="/" /> : <SignInSignUp />
-          }
+          render={() => (props.currentUser ? <Redirect to="/" /> : <SignInSignUp />)}
         />
       </Switch>
     </div>
@@ -37,7 +35,7 @@ function App(props: any) {
 }
 
 const mapStateToProps = createStructuredSelector({
-  user: selectCurrentUser,
+  currentUser: selectCurrentUser,
 });
 const mapDispatchToProps = (dispatch: any) => ({
   checkUserSession: () => dispatch(checkUserSession()),

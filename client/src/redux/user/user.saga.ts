@@ -7,7 +7,7 @@ import {
   signUpSuccess,
   signUpFailure,
 } from "./user.actions";
-import { IUserSignInInfo } from "./user.interfaces";
+import { IUserError, IUserSignInInfo } from "./user.interfaces";
 import UserActionTypes from "./user.types";
 import { store } from "../store";
 
@@ -19,9 +19,15 @@ export function* signIn({
   try {
     // const { user } = yield axios.post("/signIn", { username, password });
     const user = { id: "1234" };
+
     yield put(signInSuccess(user));
   } catch (e) {
-    yield put(signInFailure(e));
+    yield put(
+      signInFailure({
+        type: UserActionTypes.SIGN_IN_FAILURE,
+        message: "Failed to sign in.",
+      })
+    );
   }
 }
 export function* onSignInStart() {
@@ -30,9 +36,15 @@ export function* onSignInStart() {
 
 export function* signOut() {
   try {
+
     yield put(signOutSuccess());
   } catch (error) {
-    yield put(signOutFailure(error));
+    yield put(
+      signOutFailure({
+        type: UserActionTypes.SIGN_OUT_FAILURE,
+        message: "Failed to sign out.",
+      })
+    );
   }
 }
 
@@ -46,7 +58,12 @@ export function* signUp() {
     const user = { id: "1" };
     yield put(signUpSuccess(user));
   } catch (error) {
-    yield put(signUpFailure(error));
+    yield put(
+      signUpFailure({
+        type: UserActionTypes.SIGN_UP_FAILURE,
+        message: "Failed to sign up.",
+      })
+    );
   }
 }
 
@@ -57,9 +74,15 @@ export function* onSignUpStart() {
 export function* signInAfterSignUp(payload: any) {
   try {
     const user = { id: "1234" };
+  
     yield put(signInSuccess(user));
   } catch (error) {
-    yield put(signInFailure(error));
+    yield put(
+      signInFailure({
+        type: UserActionTypes.SIGN_IN_FAILURE,
+        message: "Failed to sign in.",
+      })
+    );
   }
 }
 
@@ -70,8 +93,17 @@ export function* onSignUpSuccess() {
 export function* isUserAuthenticated() {
   try {
     const userAuth = yield store.getValue().user;
+    if (!userAuth) {
+      return;
+    }
+    yield true;
   } catch (e) {
-    put(signInFailure(e));
+    put(
+      signInFailure({
+        type: UserActionTypes.SIGN_IN_FAILURE,
+        message: "Failed to sign in.",
+      })
+    );
   }
 }
 export function* onCheckUserSession() {

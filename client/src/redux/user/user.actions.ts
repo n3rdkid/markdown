@@ -1,4 +1,4 @@
-import { IUser } from "./user.interfaces";
+import { IUser, IUserError } from "./user.interfaces";
 import UserActionTypes from "./user.types";
 export const signInStart = (usernameAndPassword: {
   username: string;
@@ -12,7 +12,7 @@ export const signInSuccess = (user: IUser) => ({
   type: UserActionTypes.SIGN_IN_SUCCESS,
   payload: user,
 });
-export const signInFailure = (error: any) => ({
+export const signInFailure = (error: IUserError) => ({
   type: UserActionTypes.SIGN_IN_FAILURE,
   payload: error,
 });
@@ -20,7 +20,7 @@ export const signInFailure = (error: any) => ({
 export const signOutStart = () => ({
   type: UserActionTypes.SIGN_OUT_START,
 });
-export const signOutFailure = (error: any) => ({
+export const signOutFailure = (error: IUserError) => ({
   type: UserActionTypes.SIGN_OUT_FAILURE,
   payload: error,
 });
@@ -40,7 +40,7 @@ export const signUpSuccess = (user: IUser) => ({
   type: UserActionTypes.SIGN_UP_SUCCESS,
   payload: user,
 });
-export const signUpFailure = (error: any) => ({
+export const signUpFailure = (error: IUserError) => ({
   type: UserActionTypes.SIGN_UP_FAILURE,
   payload: error,
 });

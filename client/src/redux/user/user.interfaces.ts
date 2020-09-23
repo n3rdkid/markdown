@@ -24,14 +24,12 @@ export interface IUserState {
 }
 
 export interface IUserError {
-  error: {
-    //   Error code
-    code?: number;
-    // What action caused the error
-    type?: UserActionTypes;
-    // Message to be displayed to the user
-    message?: string;
-  };
+  //   Error code
+  code?: number;
+  // What action caused the error
+  type?: string;
+  // Message to be displayed to the user
+  message?: string;
 }
 export interface IUserAction {
   type: UserActionTypes;
