@@ -1,8 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
 import useInputState from "../../hooks/useInputState.hook";
+import { signUpStart } from "../../redux/user/user.actions";
 import Button from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
-const SignUp = () => {
+const SignUp = (props: any) => {
+  const { handleSignUp } = props;
   const [username, setUsername, resetUsername] = useInputState("");
   const [password, setPassword, resetPassword] = useInputState("");
 
@@ -15,7 +18,7 @@ const SignUp = () => {
   }, []);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    handleSignUp(username, password);
     resetPassword();
 
     resetUsername();
@@ -27,7 +30,7 @@ const SignUp = () => {
   };
   return (
     <div>
-         <h1>Sign Up</h1>
+      <h1>Sign Up</h1>
       <FormInput
         type="text"
         value={username}
@@ -48,4 +51,8 @@ const SignUp = () => {
   );
 };
 
-export default React.memo(SignUp);
+const matchDispatchToProps = (dispatch: any) => ({
+  handleSignUp: (username: string, password: string) =>
+    dispatch(signUpStart({ username, password })),
+});
+export default React.memo(connect(null, matchDispatchToProps)(SignUp));

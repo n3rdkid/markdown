@@ -31,3 +31,16 @@ export const signOutSuccess = () => ({
 export const checkUserSession = () => ({
   type: UserActionTypes.CHECK_USER_SESSION,
 });
+
+export const signUpStart = (userCredentials: any) => ({
+  type: UserActionTypes.SIGN_UP_START,
+  payload: userCredentials,
+});
+export const signUpSuccess = (user: IUser) => ({
+  type: UserActionTypes.SIGN_UP_SUCCESS,
+  payload: user,
+});
+export const signUpFailure = (error: any) => ({
+  type: UserActionTypes.SIGN_UP_FAILURE,
+  payload: error,
+});
