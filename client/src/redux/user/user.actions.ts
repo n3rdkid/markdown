@@ -12,9 +12,20 @@ export const signInSuccess = (user: IUser) => ({
   type: UserActionTypes.SIGN_IN_SUCCESS,
   payload: user,
 });
-export const signInFailure = (user: IUser) => ({
-  type: UserActionTypes.SIGN_IN_SUCCESS,
-  payload: user,
+export const signInFailure = (error: any) => ({
+  type: UserActionTypes.SIGN_IN_FAILURE,
+  payload: error,
+});
+
+export const signOutStart = () => ({
+  type: UserActionTypes.SIGN_OUT_START,
+});
+export const signOutFailure = (error: any) => ({
+  type: UserActionTypes.SIGN_OUT_FAILURE,
+  payload: error,
+});
+export const signOutSuccess = () => ({
+  type: UserActionTypes.SIGN_OUT_SUCCESS,
 });
 
 export const checkUserSession = () => ({

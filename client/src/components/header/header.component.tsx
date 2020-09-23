@@ -1,25 +1,27 @@
 import React from "react";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
+import { signOutStart } from "../../redux/user/user.actions";
 import { selectCurrentUser } from "../../redux/user/user.selector";
 import "./header.styles.scss";
 
 const Header: React.FC<any> = (props: any) => {
-  const { currentUser } = props;
+  const { currentUser, handleSignOut } = props;
   return (
     <div className="header">
       <div className="logo"> Markdown</div>
       <nav className="links">
         {currentUser?.id ? (
-          <NavLink className="link" to="/signout">
-            Sign Out
-          </NavLink>
-        ) : (
-          <NavLink className="link" to="/signin">
+          <button className="link" onClick={handleSignOut}>
             {" "}
-            Sign in{" "}
-          </NavLink>
+            Sign out{" "}
+          </button>
+        ) : (
+          <button className="link">
+            {" "}
+            <Link to="/signin">Sign in</Link>{" "}
+          </button>
         )}
       </nav>
     </div>
@@ -29,4 +31,7 @@ const Header: React.FC<any> = (props: any) => {
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
 });
-export default React.memo(connect(mapStateToProps)(Header));
+const mapDispatchToProps = (dispatch: any) => ({
+  handleSignOut: () => dispatch(signOutStart()),
+});
+export default React.memo(connect(mapStateToProps, mapDispatchToProps)(Header));

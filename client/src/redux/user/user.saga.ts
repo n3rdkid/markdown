@@ -1,5 +1,10 @@
-import { takeLatest, put, all, call } from "redux-saga/effects";
-import { signInSuccess, signInFailure } from "./user.actions";
+import { takeLatest, put, all, call, takeEvery } from "redux-saga/effects";
+import {
+  signInSuccess,
+  signInFailure,
+  signOutSuccess,
+  signOutFailure,
+} from "./user.actions";
 import { IUserSignInInfo } from "./user.interfaces";
 import UserActionTypes from "./user.types";
 import { store } from "../store";
@@ -21,6 +26,17 @@ export function* onSignInStart() {
   yield takeLatest(UserActionTypes.SIGN_IN_START as any, signIn);
 }
 
+export function* signOut() {
+  try {
+    yield put(signOutSuccess());
+  } catch (error) {
+    yield put(signOutFailure(error));
+  }
+}
+
+export function* onSignOutStart() {
+  yield takeEvery(UserActionTypes.SIGN_OUT_START, signOut);
+}
 export function* isUserAuthenticated() {
   try {
     const userAuth = yield store.getValue().user;
@@ -29,7 +45,6 @@ export function* isUserAuthenticated() {
     put(signInFailure(e));
   }
 }
-
 export function* onCheckUserSession() {
   yield takeLatest(UserActionTypes.CHECK_USER_SESSION, isUserAuthenticated);
 }
@@ -37,7 +52,7 @@ export function* userSagas() {
   yield all([
     call(onSignInStart),
     call(isUserAuthenticated),
-    // call(onSignOutStart),
+    call(onSignOutStart),
     // call(onSignUpStart),
     // call(onSignUpSuccess),
   ]);
